@@ -4,12 +4,8 @@ services:
     image: golang:1.22
     user: ${USER_ID}:${GROUP_ID}
     working_dir: /app
-    environment:
-      - GOCACHE=/go/.cache:/go/.cache:rw
     volumes:
       - "./:/app"
-      - "golang_cache:/go/.cache"
-      - "~/.cache/go/gopath:/go"
     networks:
       default:
         ipv4_address: "${COMPOSE_PROJECT_NETWORK}.2"
@@ -25,7 +21,5 @@ networks:
         - subnet: "${COMPOSE_PROJECT_NETWORK}.0/24"
           gateway: "${COMPOSE_PROJECT_NETWORK}.1"
 
-volumes:
-  golang_cache:
-    driver: local
+
 
