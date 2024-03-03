@@ -5,15 +5,16 @@ services:
     user: ${USER_ID}:${GROUP_ID}
     working_dir: /app
     environment:
-      - GOCACHE=/go/.cache
+      - GOCACHE=${GOCACHE}:${GOCACHE}:rw
     volumes:
       - "./:/app"
-      - "golang_cache:/go/.cache"
-      - "${GOPATH}:/go"
+      - golang_cache:${GOCACHE}
+      - ${GOPATH}:/go
     networks:
       default:
         ipv4_address: "${COMPOSE_PROJECT_NETWORK}.2"
     tty: true
+    stdin_open: true
 
 networks:
   default:
