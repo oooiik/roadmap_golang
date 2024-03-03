@@ -1,0 +1,25 @@
+services:
+  golang:
+    container_name: "${COMPOSE_PROJECT_NAME}-golang"
+    image: golang:1.22
+    user: ${USER_ID}:${GROUP_ID}
+    working_dir: /app
+    volumes:
+      - "./:/app"
+    networks:
+      default:
+        ipv4_address: "${COMPOSE_PROJECT_NETWORK}.2"
+    tty: true
+
+networks:
+  default:
+    name: "${COMPOSE_PROJECT_NAME}_default"
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: "${COMPOSE_PROJECT_NETWORK}.0/24"
+          gateway: "${COMPOSE_PROJECT_NETWORK}.1"
+
+
+
