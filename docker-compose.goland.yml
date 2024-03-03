@@ -1,0 +1,24 @@
+services:
+  golang:
+    container_name: "${COMPOSE_PROJECT_NAME}-golang"
+    image: golang:1.22
+    user: ${USER_ID}:${GROUP_ID}
+    working_dir: /app
+    environment:
+      - GOCACHE=/go/.cache:/go/.cache:rw
+    volumes:
+      - "./:/app"
+      - "golang_cache:/go/.cache"
+      - "${GOPATH}:/go"
+
+networks:
+  default:
+    name: "${COMPOSE_PROJECT_NAME}-default"
+    driver: bridge
+    ipam:
+      driver: default
+
+volumes:
+  golang_cache:
+    driver: local
+
